@@ -1,0 +1,5 @@
+.vagrant/
+netty-promises/target/
+netty-promises/.project
+netty-promises/.classpath
+netty-promises/.settings/

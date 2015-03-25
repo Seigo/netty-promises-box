@@ -1,0 +1,5 @@
+A small Java app exploring the use of the promises mechanism in a Netty application without other libraries or frameworks for messaging.
+
+This development environment requires knowledge of:
+ - Apache Maven software project management tool
+ - Vagrant development environment
