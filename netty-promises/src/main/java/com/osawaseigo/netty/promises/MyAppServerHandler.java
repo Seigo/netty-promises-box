@@ -10,10 +10,14 @@ public class MyAppServerHandler extends SimpleChannelInboundHandler<String> {
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msg)
 			throws Exception {
-		System.out.println("MyAppServerHandler received: " + msg);
+		System.out.println("[server][in] " + msg);
 		
-		System.out.println("Doing stuff that delays response..");
-		
-		ctx.writeAndFlush(msg);
+		if (IoClient.MESSAGE_LONG_DELAY.equals(msg)) {
+			Thread.sleep(3000);
+		}
+
+		String answer = "Response to " + msg;
+		System.out.println("[server][out] " + answer);
+		ctx.writeAndFlush(answer);
 	}
 }

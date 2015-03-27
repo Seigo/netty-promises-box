@@ -16,8 +16,7 @@ public class MyAppClientHandler extends SimpleChannelInboundHandler<String> {
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, String msg)
 			throws Exception {
-		System.out.println("MyAppClientHandler: msg received: " + msg);
-		responseFuture.set(msg);		
+		System.out.println("[client][in] " + msg);
+		responseFuture.set(msg);
 	}
-
 }

@@ -7,15 +7,19 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
-public class IoServer {
+public class IoServer implements Runnable {
 	private int port;
 
 	public IoServer(int port) {
 		this.port = port;
 	}
 	
-	public void run() throws InterruptedException {
+	public void run() {
+		System.out.println("Initializing server..");
+		
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		
@@ -27,14 +31,19 @@ public class IoServer {
 					@Override
 					protected void initChannel(SocketChannel channel)
 							throws Exception {
+						channel.pipeline().addLast(new StringDecoder());
+						channel.pipeline().addLast(new StringEncoder());
 						channel.pipeline().addLast(new MyAppServerHandler());
 					}
 				})
 				.option(ChannelOption.SO_BACKLOG, 128)
 				.childOption(ChannelOption.SO_KEEPALIVE, true);
 			
-			b.bind(port).sync().channel().closeFuture().sync();
+			// Just keep it open forever
+			b.bind(port).channel().closeFuture().sync();
 			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		} finally {
 			workerGroup.shutdownGracefully();
 			bossGroup.shutdownGracefully();
