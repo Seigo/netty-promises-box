@@ -1,5 +1,7 @@
 A small Java app exploring the use of the promises mechanism in a Netty application without other libraries or frameworks for messaging.
 
+This experiment resulted in a blog post: https://osawaseigo.wordpress.com/2015/03/26/using-promisesfutures-in-netty/
+
 This development environment requires knowledge of:
  - Apache Maven software project management tool
  - Vagrant development environment
